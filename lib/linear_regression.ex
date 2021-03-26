@@ -1,30 +1,30 @@
 defmodule PlayingWithNx.LinearRegression do
   import Nx.Defn
 
-  defn calc_b(x_tensor, y_tensor) do
-    top = Nx.sum(
+  defn calc_beta(x_tensor, y_tensor) do
+    numerator = Nx.sum(
       Nx.multiply(
         (x_tensor - Nx.mean(x_tensor)), 
         (y_tensor - Nx.mean(y_tensor))
       )
     )
-    bottom = Nx.sum(
+    denominator = Nx.sum(
       Nx.power(
         (x_tensor - Nx.mean(x_tensor)), 
         2
       )
     )
-    top/bottom
+    numerator/denominator
   end
 
-  defn calc_a(x_tensor, y_tensor) do
+  defn calc_alpha(x_tensor, y_tensor) do
       Nx.mean(y_tensor) - Nx.multiply(
-        calc_b(x_tensor, y_tensor), 
+        calc_beta(x_tensor, y_tensor), 
         Nx.mean(x_tensor)
       )
   end
 
   def linear_regression(x_tensor, y_tensor) do
-    %{:a => calc_b(x_tensor, y_tensor), :b => calc_a(x_tensor, y_tensor)}
+    %{:beta => calc_beta(x_tensor, y_tensor), :alpha => calc_alpha(x_tensor, y_tensor)}
   end
 end
