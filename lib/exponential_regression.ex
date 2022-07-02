@@ -6,11 +6,12 @@ defmodule PlayingWithNx.ExponentialRegression do
   end
 
   def exponential_regression(x_tensor, y_tensor) do
-    %{:alpha => alpha, :beta => beta} = 
+    %{:alpha => alpha, :beta => beta} =
       PlayingWithNx.LinearRegression.linear_regression(
         x_tensor,
         exp_to_linear(y_tensor)
       )
+
     %{:beta => Nx.exp(beta), :alpha => Nx.exp(alpha)}
   end
 end
